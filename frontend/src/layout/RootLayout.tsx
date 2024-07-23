@@ -1,15 +1,14 @@
 import { FC, ReactElement } from 'react';
 import { Outlet } from "react-router-dom";
-import Header from '@/components/Header';
+import { Flex } from '@chakra-ui/react';
 
 const RootLayout: FC = (): ReactElement => {
   return (
-    <>
-      <Header />
+    <Flex justifyContent={'center'} p={20}>
       <main>
         <Outlet />
       </main>
-    </>
+    </Flex>
   );
 };
 
