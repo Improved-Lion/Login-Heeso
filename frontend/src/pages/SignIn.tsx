@@ -54,22 +54,26 @@ function SignIn() {
       <Text fontSize={'x-large'}>LOGIN</Text>
         <FormControl id='email'>
           <VStack spacing={5}>
-          <FormLabel srOnly>이메일</FormLabel>
-          <Input
-            id='email'
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder='Email address'
-          />
-          <FormLabel id='password' srOnly>비밀번호</FormLabel>
-          <Input
-            id='password'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder='Password'
-          />
+            
+            {/* 공식문서에는 htmlFor 을 사용안하지만 연결이 필요할 것 같아 작성함. 어떻게 생각하시나요? */}
+            <FormLabel htmlFor='email' srOnly>이메일</FormLabel>
+            <Input
+              id='email'
+              type='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder='Email address'
+            />
+
+            <FormLabel htmlFor='password' srOnly>비밀번호</FormLabel>
+            <Input
+              id='password'
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder='Password'
+            />
+
           </VStack>
         </FormControl>
 
