@@ -33,6 +33,13 @@ function SignIn() {
     try {
       const authData = await pb.collection('users').authWithPassword(email, password);
       console.log('로그인 성공', authData);
+      toast({
+        title: 'Login Completed',
+        description: "Welcome here!",
+        duration: 5000,
+        isClosable: true,
+        status: 'success'
+      })
       navigate('/home');
     } catch (error) {
       console.log('로그인 실패', error);
@@ -41,6 +48,7 @@ function SignIn() {
         description: "Make sure you joined us and please check your password!",
         duration: 5000,
         isClosable: true,
+        status: 'error'
       })
     }
   };
