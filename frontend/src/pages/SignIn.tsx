@@ -1,9 +1,11 @@
-import { Button, Flex, FormControl, FormLabel, Input, FormErrorMessage, Text, useToast, VStack } from '@chakra-ui/react';
+import { Button, Flex, FormControl, FormLabel, Input, Text, useToast, VStack, InputRightElement, InputGroup } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/react';
 import PocketBase from 'pocketbase';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+
 
 const pb = new PocketBase('http://127.0.0.1:8090');
 
@@ -11,6 +13,8 @@ function SignIn() {
   // 입력 창 상태
   const [ email, setEmail ] = useState<string>('');
   const [ password, setPassword ] = useState<string>('');
+
+  const [ show, setShow ] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -31,7 +35,7 @@ function SignIn() {
     e.preventDefault();
 
     try {
-      const authData = await pb.collection('users').authWithPassword(email, password);
+      const authData = await pb.collection('users').authWithPassword( email, password );
       console.log('로그인 성공', authData);
       toast({
         title: 'Login Completed',
@@ -50,8 +54,11 @@ function SignIn() {
         isClosable: true,
         status: 'error'
       })
+      console.log(email, password);
     }
   };
+
+  const isPwVisible = () => setShow(!show);
 
   return(
     <Flex
@@ -62,8 +69,7 @@ function SignIn() {
       <Text fontSize={'x-large'}>LOGIN</Text>
         <FormControl id='email'>
           <VStack spacing={5}>
-            
-            {/* 공식문서에는 htmlFor 을 사용안하지만 연결이 필요할 것 같아 작성함. 어떻게 생각하시나요? */}
+
             <FormLabel htmlFor='email' srOnly>이메일</FormLabel>
             <Input
               id='email'
@@ -74,14 +80,21 @@ function SignIn() {
             />
 
             <FormLabel htmlFor='password' srOnly>비밀번호</FormLabel>
-            <Input
-              id='password'
-              type='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder='Password'
-            />
-
+            <InputGroup>
+              <Input
+                id='password'
+                type={show ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder='Password'
+              />
+              <InputRightElement w='3rem'>
+                <Button onClick={isPwVisible} borderTopLeftRadius={0} borderBottomLeftRadius={0}>
+                  {show ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+            
           </VStack>
         </FormControl>
 
