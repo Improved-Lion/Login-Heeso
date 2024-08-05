@@ -1,16 +1,25 @@
 import { Flex, Text, Button } from "@chakra-ui/react";
-import useUserStore from '@/store/useUserStore';
 import { useNavigate } from 'react-router-dom';
+import PocketBase from 'pocketbase';
+
+const pb = new PocketBase('http://127.0.0.1:8090');
 
 function Home() {
   // zustand 에 저장된 정보 불러오기
-  const { user, logout } = useUserStore();
+  // const { user, logout } = useUserStore();
+  const info = pb.collection('users').getOne()
+  const user = pb.authStore
   const navigate = useNavigate();
+  console.log(user);
 
-  const handleLogout = () => {
-    logout();
-    // 로그인 화면으로 이동하는 걸 지우고 보면 user information 이 사라지는 것을 확인할 수 있다.
-    navigate('/');
+  const handleLogout = async () => {
+    try {
+      await pb.authStore.clear();
+      navigate('/');
+    } catch (error) {
+      console.error("Logout failed : ",error)
+    }
+    
   }
 
   return(
