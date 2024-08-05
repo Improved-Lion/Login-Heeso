@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/react';
 import PocketBase from 'pocketbase';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-
+import useUserStore from '@/store/useUserStore';
 
 const pb = new PocketBase('http://127.0.0.1:8090');
 
@@ -18,6 +18,7 @@ function SignIn() {
 
   const navigate = useNavigate();
   const toast = useToast();
+  const { setUser } = useUserStore();
 
   // 입력할 때마다 유효성 검사 - 실패시 에러메세지 띄우기
   // 불필요한 사용자 경험, 형식 검사 필요하지 않음, 보안 이슈로 제거
@@ -26,7 +27,7 @@ function SignIn() {
 
   // 아이디 비밀번호 서버로 보내기
   // 결과값
-  // 1. 로그인 성공 : 다음 페이지로 이동
+  // 1. 로그인 성공 : 다음 페이지로 이동, zustand 에 유저 정보 저장
   // 2. 로그인 실패 - 비밀번호 틀림 : 에러메세지 출력
   // 3. 로그인 실패 - 존재하지 않는 회원 : 에러메세지 출력
 
@@ -37,6 +38,11 @@ function SignIn() {
     try {
       const authData = await pb.collection('users').authWithPassword( email, password );
       console.log('로그인 성공', authData);
+      setUser({
+        token: authData.token,
+        email: email,
+        name: authData.record.name,
+      })
       toast({
         title: 'Login Completed',
         description: "Welcome here!",
