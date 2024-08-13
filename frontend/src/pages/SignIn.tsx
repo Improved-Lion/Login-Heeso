@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/react';
 import PocketBase from 'pocketbase';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-import useUserStore from '@/store/useUserStore';
+import { useUserStore } from '@/store/useUserStore';
 
 const pb = new PocketBase('http://127.0.0.1:8090');
 
@@ -13,7 +13,6 @@ function SignIn() {
   // 입력 창 상태
   const [ email, setEmail ] = useState<string>('');
   const [ password, setPassword ] = useState<string>('');
-
   const [ show, setShow ] = useState<boolean>(false);
 
   const navigate = useNavigate();

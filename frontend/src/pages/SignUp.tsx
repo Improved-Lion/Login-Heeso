@@ -14,12 +14,6 @@ function SignUp() {
   const [ confirmPassword, setConfirmPassword ] = useState<string>('');
   const [ nickname, setNickname ] = useState<string>('');
 
-  // // 형식 검사 상태
-  // const [ emailError, setEmailError ] = useState<boolean>(false);
-  // const [ passwordError, setPasswordError ] = useState<boolean>(false);
-  // const [ passwordConfirmError, setPasswordConfirmError ] = useState<boolean>(false);
-  // const [ nicknameError, setNicknameError ] = useState<boolean>(false);
-
   const [ errors, setErrors ] = useState({
     email: false,
     password: false,
