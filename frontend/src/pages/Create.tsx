@@ -10,7 +10,7 @@ const pb = new PocketBase('http://127.0.0.1:8090');
 function Create() {
   const [ title, setTitle ] = useState('');
   const [ content, setContent ] = useState('');
-  const user = useUserStore();
+  const { user } = useUserStore();
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ function Create() {
         "title" : title,
         "content" : content,
         "dateTime" : dateTime,
-        "author" : user.token,
+        "author" : user?.token,
       });
       setTitle('');
       setContent('');
