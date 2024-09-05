@@ -12,7 +12,6 @@ function Header() {
   const location = useLocation();
   const { user, logout } = useUserStore();
   const navigate = useNavigate();
-  console.log(user);
 
   if ( location.pathname === '/') {
     return null;

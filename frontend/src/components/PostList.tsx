@@ -6,7 +6,7 @@ import { Flex, Text } from '@chakra-ui/react';
 const pb = new PocketBase('http://127.0.0.1:8090');
 
 interface PostData {
-  author: { name: string };
+  author: string;
   collectionId: string;
   collectionName: string;
   content: string;
@@ -27,7 +27,7 @@ function PostList() {
       try {
         const response = await pb.collection('posts').getList(1, 50, {
           expand: 'author',
-          fields: 'title, content, author.name, dateTime'
+          fields: 'id, title, content, author.name, dateTime'
         });
         console.log(response.items);
         setData(response.items);
@@ -59,6 +59,7 @@ function PostList() {
       {data.map(post => (
         <Post
           key={post.id}
+          id={post.id}
           title={post.title}
           authorName={post.author.name}
           authorId={post.author}

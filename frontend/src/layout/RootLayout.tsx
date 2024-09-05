@@ -13,7 +13,9 @@ const RootLayout: FC = (): ReactElement => {
       gap={5}
     >
       <Header />
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
     </Flex>
   );
 };
